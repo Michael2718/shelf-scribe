@@ -12,15 +12,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.shelf_scribe.R
 import com.example.shelf_scribe.ui.screens.HomeScreen
 
 @Composable
 fun ShelfScribeApp(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ShelfScribeViewModel = viewModel(factory = ShelfScribeViewModel.Factory)
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             ShelfScribeTopAppBar(
@@ -30,6 +37,8 @@ fun ShelfScribeApp(
         }
     ) { innerPadding ->
         HomeScreen(
+            searchRequestStatus = uiState.searchRequestStatus,
+            context = context,
             modifier = modifier.padding(innerPadding)
         )
     }
