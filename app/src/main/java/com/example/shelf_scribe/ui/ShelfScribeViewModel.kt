@@ -7,19 +7,14 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.shelf_scribe.ShelfScribeApplication
 import com.example.shelf_scribe.data.ShelfScribeRepository
-import com.example.shelf_scribe.model.api.Volume
+import com.example.shelf_scribe.network.SearchRequestStatus
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
-
-sealed interface SearchRequestStatus {
-    data class Success(val volumes: List<Volume>) : SearchRequestStatus
-    object Error : SearchRequestStatus
-    object Loading : SearchRequestStatus
-}
 
 class ShelfScribeViewModel(
     private val shelfScribeRepository: ShelfScribeRepository
@@ -34,16 +29,18 @@ class ShelfScribeViewModel(
 
     init {
         searchVolumes(
-            query = "cat" // TODO: query dependency injection
+            query = "cat"
         )
     }
 
     fun searchVolumes(query: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _uiState.update {
                 it.copy(
                     searchRequestStatus = try {
-                        SearchRequestStatus.Success(shelfScribeRepository.searchVolumes(query))
+                        SearchRequestStatus.Success(
+                            volumes = shelfScribeRepository.searchVolumes(query)
+                        )
                     } catch (e: IOException) {
                         SearchRequestStatus.Error
                     } catch (e: HttpException) {

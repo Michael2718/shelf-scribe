@@ -27,7 +27,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shelf_scribe.R
 import com.example.shelf_scribe.model.api.Volume
-import com.example.shelf_scribe.ui.SearchRequestStatus
+import com.example.shelf_scribe.network.SearchRequestStatus
 import com.example.shelf_scribe.ui.theme.ShelfScribeTheme
 
 @Composable
@@ -40,7 +40,7 @@ fun HomeScreen(
         is SearchRequestStatus.Loading -> Text(text = "Loading")
         is SearchRequestStatus.Success -> {
             ThumbnailsGridScreen(
-                volumes = searchRequestStatus.volumes,
+                thumbnails = getThumbnailsFromVolumes(searchRequestStatus.volumes),
                 context = context,
                 modifier = modifier
             )
@@ -51,18 +51,18 @@ fun HomeScreen(
 
 @Composable
 fun ThumbnailsGridScreen(
-    volumes: List<Volume>,
+    thumbnails: List<String>,
     context: Context,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(144.dp),
+        columns = GridCells.Adaptive(128.dp),
         modifier = modifier,
         contentPadding = PaddingValues(dimensionResource(R.dimen.padding_small))
     ) {
-        items(items = volumes, key = { volume -> volume.id }) { volume ->
+        items(items = thumbnails, key = { thumbnail -> thumbnail }) { thumbnail ->
             ThumbnailCard(
-                imageLink = volume.volumeInfo.imageLinks.thumbnail,
+                imageLink = thumbnail,
                 context = context,
                 modifier = Modifier
                     .padding(dimensionResource(R.dimen.padding_small))
@@ -99,6 +99,10 @@ fun ThumbnailCard(
             contentScale = ContentScale.Crop
         )
     }
+}
+
+private fun getThumbnailsFromVolumes(volumes: List<Volume>): List<String> {
+    return volumes.map { it.volumeInfo.imageLinks.thumbnail }
 }
 
 @Preview(showBackground = true)
