@@ -22,15 +22,23 @@ class ShelfScribeViewModel(
 
     private val _uiState = MutableStateFlow(
         ShelfScribeUiState(
+            query = "",
+            isSearching = false,
             searchRequestStatus = SearchRequestStatus.Loading
         )
     )
     val uiState: StateFlow<ShelfScribeUiState> = _uiState
 
+//    private val _searchTextState = MutableStateFlow("")
+//    val searchText = _searchTextState.asStateFlow()
+//
+//    private val _isSearching = MutableStateFlow(false)
+//    val isSearching = _isSearching.asStateFlow()
+
     init {
-        searchVolumes(
-            query = "cat"
-        )
+//        searchVolumes(
+//            query = "cat"
+//        )
     }
 
     fun searchVolumes(query: String) {
@@ -48,6 +56,14 @@ class ShelfScribeViewModel(
                     }
                 )
             }
+        }
+    }
+
+    fun updateQuery(query: String) {
+        _uiState.update {
+            it.copy(
+                query = query
+            )
         }
     }
 

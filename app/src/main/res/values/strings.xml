@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Shelf Scribe</string>
     <string name="back">Back</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
 </resources>

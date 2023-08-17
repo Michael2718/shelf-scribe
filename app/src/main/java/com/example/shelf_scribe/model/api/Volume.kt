@@ -6,7 +6,14 @@ import kotlinx.serialization.Serializable
 data class Volume(
     val id: String,
     val volumeInfo: VolumeInfo
-)
+) {
+//    fun doesMatchSearchQuery(query: String): Boolean {
+//        val title = volumeInfo.title
+//        val matchingCombinations = listOf(
+//            ""
+//        )
+//    }
+}
 
 @Serializable
 data class VolumeInfo(
