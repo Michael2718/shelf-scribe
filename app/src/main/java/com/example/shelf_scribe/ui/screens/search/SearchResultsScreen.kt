@@ -2,6 +2,7 @@ package com.example.shelf_scribe.ui.screens.search
 
 import android.content.Context
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -84,21 +86,31 @@ fun ThumbnailCard(
         shape = RectangleShape,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(context = context)
-                .data(imageLink.replace("http", "https"))
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            placeholder = painterResource(R.drawable.loading_img),
-            error = painterResource(R.drawable.ic_broken_image),
-            alignment = Alignment.Center,
-            contentScale = ContentScale.Crop
-        )
+        if (imageLink == "") {
+            Image(
+                painter =  painterResource(R.drawable.ic_broken_image),
+                contentDescription = stringResource(R.string.book_thumbnail_is_missing),
+                modifier = Modifier.fillMaxSize(),
+                alignment = Alignment.Center,
+                contentScale = ContentScale.Fit
+            )
+        } else {
+            AsyncImage(
+                model = ImageRequest.Builder(context = context)
+                    .data(imageLink.replace("http", "https"))
+                    .crossfade(true)
+                    .build(),
+                contentDescription = stringResource(R.string.book),
+                modifier = Modifier.fillMaxSize(),
+                placeholder = painterResource(R.drawable.loading_img),
+                error = painterResource(R.drawable.ic_broken_image),
+                alignment = Alignment.Center,
+                contentScale = ContentScale.Crop
+            )
+        }
     }
 }
 
 private fun getThumbnailsFromVolumes(volumes: List<Volume>): List<String> {
-    return volumes.map { it.volumeInfo.imageLinks.thumbnail }
+    return volumes.map { it.volumeInfo.imageLinks?.thumbnail ?: "" }
 }
