@@ -74,7 +74,7 @@ fun SearchDetailsScreen(
                     }
                 }
                 Text(text = "${volume.volumeInfo.title} - ${volume.volumeInfo.authors}")
-                Text(text = volume.volumeInfo.description)
+                volume.volumeInfo.description?.let { Text(text = it) }
             }
         }
         is VolumeRequestStatus.Error -> Text(text = "Error")
