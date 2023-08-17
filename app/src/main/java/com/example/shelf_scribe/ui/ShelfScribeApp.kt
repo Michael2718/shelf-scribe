@@ -74,11 +74,18 @@ fun ShelfScribeApp(
                     query = uiState.query,
                     onQueryChange = { viewModel.updateQuery(it) },
                     onSearch = {
-                        viewModel.searchVolumes(uiState.query)
+                        viewModel.updateQuery(it)
+                        viewModel.searchVolumes(it)
+                        viewModel.isSearching(false)
                         keyboardController?.hide()
                     },
                     isSearching = uiState.isSearching,
-                    onActiveChange = { /*TODO: ???*/ },
+                    onActiveChange = { viewModel.isSearching(it) },
+                    onBack = {
+                        viewModel.isSearching(false)
+                        keyboardController?.hide()
+                    },
+                    onClear = { viewModel.updateQuery("") },
                     modifier = Modifier
                         .padding(
                             start = dimensionResource(R.dimen.padding_medium),
