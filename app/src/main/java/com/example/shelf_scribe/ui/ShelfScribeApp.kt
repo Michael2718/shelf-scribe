@@ -41,17 +41,8 @@ fun ShelfScribeApp(
     navController: NavHostController = rememberNavController()
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
-//    val currentScreen = Screen.valueOf(
-//        backStackEntry?.destination?.route ?: ShelfScribeScreen.Start.name
-//    )
     val currentDestination = backStackEntry?.destination
     val currentRoute = currentDestination?.route ?: Screen.Home.route
-
-    val uiState by viewModel.uiState.collectAsState()
-
-    val context = LocalContext.current
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     val navigationItemContentList = listOf(
         NavigationItemContent(
             route = Screen.Home.route,
@@ -64,6 +55,11 @@ fun ShelfScribeApp(
             label = stringResource(R.string.search)
         ),
     )
+
+    val uiState by viewModel.uiState.collectAsState()
+
+    val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         modifier = modifier,
@@ -131,7 +127,9 @@ private fun BottomNavigationBar(
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
-        modifier = modifier
+        modifier = modifier,
+//        containerColor = MaterialTheme.colorScheme.primaryContainer,
+//        contentColor = MaterialTheme.colorScheme.onSurface
     ) {
         for (navItem in navigationItemContentList) {
             NavigationBarItem(
