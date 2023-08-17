@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -65,12 +66,20 @@ fun ShelfScribeApp(
         topBar = {
             when (currentRoute) {
                 Screen.Home.route -> HomeScreenTopAppBar()
-                Screen.Search.route -> SearchTopBar(
+                Screen.Search.Entry.route -> SearchTopBar(
                     query = uiState.query,
                     onQueryChange = { viewModel.updateQuery(it) },
-                    onSearch = { /*TODO: navigate to SearchResults*/ },
+                    onSearch = { /*TODO: Update query and make request. Navigate to SearchResults*/ },
                     isSearching = uiState.isSearching,
-                    onActiveChange = { /*TODO: ???*/ }
+                    onActiveChange = { /*TODO: ???*/ },
+                    modifier = Modifier
+//                        .background(MaterialTheme.colorScheme.primary)
+                        .padding(
+                            start = dimensionResource(R.dimen.padding_medium),
+                            end = dimensionResource(R.dimen.padding_medium),
+                            bottom = dimensionResource(R.dimen.padding_medium)
+                        )
+                        .fillMaxWidth()
                 )
             }
         },
@@ -103,7 +112,6 @@ fun ShelfScribeApp(
 
 @Composable
 private fun BottomNavigationBar(
-//    currentTab: TabType,
     currentDestination: NavDestination?,
     onTabPressed: ((String) -> Unit),
     navigationItemContentList: List<NavigationItemContent>,

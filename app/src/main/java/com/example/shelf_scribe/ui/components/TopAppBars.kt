@@ -1,13 +1,19 @@
 package com.example.shelf_scribe.ui.components
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.shelf_scribe.R
 
@@ -20,16 +26,11 @@ fun HomeScreenTopAppBar(
         title = {
             Text(
                 text = stringResource(R.string.app_name),
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.secondary,
                 style = MaterialTheme.typography.headlineSmall
             )
         },
-        modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            navigationIconContentColor = MaterialTheme.colorScheme.surface,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        modifier = modifier
     )
 }
 
@@ -49,8 +50,24 @@ fun SearchTopBar(
         onSearch = onSearch,
         active = isSearching,
         onActiveChange = onActiveChange,
-        modifier = modifier
+        modifier = modifier,
+        placeholder = { Text(text = stringResource(R.string.search_books)) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = stringResource(R.string.search)
+            )
+        },
+        trailingIcon = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    imageVector = Icons.Filled.Clear,
+                    contentDescription = stringResource(R.string.clear)
+                )
+            }
+        },
+        shape = RoundedCornerShape(dimensionResource(R.dimen.padding_medium))
     ) {
-
+        Text(text = "Hello, i am search")
     }
 }
