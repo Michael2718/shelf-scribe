@@ -60,7 +60,7 @@ fun ThumbnailsGridScreen(
         modifier = modifier,
         contentPadding = PaddingValues(dimensionResource(R.dimen.padding_small))
     ) {
-        items(items = thumbnails, key = { thumbnail -> thumbnail }) { thumbnail ->
+        items(items = thumbnails) { thumbnail ->
             ThumbnailCard(
                 imageLink = thumbnail,
                 context = context,
