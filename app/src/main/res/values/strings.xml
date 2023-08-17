@@ -3,4 +3,8 @@
     <string name="back">Back</string>
     <string name="search">Search</string>
     <string name="home">Home</string>
+    <string name="search_books">Search books</string>
+    <string name="clear">Clear</string>
+    <string name="book_thumbnail_is_missing">Book thumbnail is missing</string>
+    <string name="book">Book</string>
 </resources>

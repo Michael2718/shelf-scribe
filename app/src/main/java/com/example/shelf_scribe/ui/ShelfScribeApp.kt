@@ -69,11 +69,10 @@ fun ShelfScribeApp(
                 Screen.Search.Entry.route -> SearchTopBar(
                     query = uiState.query,
                     onQueryChange = { viewModel.updateQuery(it) },
-                    onSearch = { /*TODO: Update query and make request. Navigate to SearchResults*/ },
+                    onSearch = { viewModel.searchVolumes(uiState.query) },
                     isSearching = uiState.isSearching,
                     onActiveChange = { /*TODO: ???*/ },
                     modifier = Modifier
-//                        .background(MaterialTheme.colorScheme.primary)
                         .padding(
                             start = dimensionResource(R.dimen.padding_medium),
                             end = dimensionResource(R.dimen.padding_medium),

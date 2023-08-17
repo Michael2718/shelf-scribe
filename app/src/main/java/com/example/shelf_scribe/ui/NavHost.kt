@@ -54,7 +54,10 @@ fun NavGraphBuilder.searchGraph(
         route = Screen.Search.route
     ) {
         composable(Screen.Search.Entry.route) {
-            // Search Bar
+            SearchResultsScreen(
+                searchRequestStatus = searchRequestStatus,
+                context = context,
+            )
         }
         composable(Screen.Search.Results.route) {
             SearchResultsScreen(

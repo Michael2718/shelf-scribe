@@ -1,6 +1,5 @@
 package com.example.shelf_scribe.ui.components
 
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -13,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.example.shelf_scribe.R
 
@@ -65,9 +63,8 @@ fun SearchTopBar(
                     contentDescription = stringResource(R.string.clear)
                 )
             }
-        },
-        shape = RoundedCornerShape(dimensionResource(R.dimen.padding_medium))
+        }
     ) {
-        Text(text = "Hello, i am search")
+
     }
 }
