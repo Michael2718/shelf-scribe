@@ -11,11 +11,15 @@ data class ExtendedVolume(
 @Serializable
 data class ExtendedVolumeInfo(
     val title: String,
-    val imageLinks: ExtendedImageLinks
+    val authors: List<String>,
+    val description: String,
+    val pageCount: Int,
+    val imageLinks: ExtendedImageLinks? = null
 )
 
 @Serializable
 data class ExtendedImageLinks(
-    val thumbnail: String,
-    val medium: String
+    val thumbnail: String? = null,
+    val small: String? = null,
+    val medium: String? = null
 )

@@ -113,6 +113,11 @@ fun ShelfScribeApp(
             navController = navController,
             context = context,
             searchRequestStatus = uiState.searchRequestStatus,
+            volumeRequestStatus = uiState.volumeRequestStatus,
+            onVolumeClick = { id ->
+                navController.navigate(Screen.Search.Details.route)
+                viewModel.getVolume(id)
+            },
             modifier = modifier
                 .padding(innerPadding)
         )

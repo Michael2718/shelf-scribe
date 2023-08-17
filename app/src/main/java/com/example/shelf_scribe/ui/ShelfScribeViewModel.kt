@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.shelf_scribe.ShelfScribeApplication
 import com.example.shelf_scribe.data.ShelfScribeRepository
 import com.example.shelf_scribe.network.SearchRequestStatus
+import com.example.shelf_scribe.network.VolumeRequestStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,18 +25,11 @@ class ShelfScribeViewModel(
         ShelfScribeUiState(
             query = "",
             isSearching = false,
-            searchRequestStatus = SearchRequestStatus.Loading
+            searchRequestStatus = SearchRequestStatus.Loading,
+            volumeRequestStatus = VolumeRequestStatus.Loading
         )
     )
     val uiState: StateFlow<ShelfScribeUiState> = _uiState
-
-    fun isSearching(isSearching: Boolean) {
-        _uiState.update {
-            it.copy(
-                isSearching = isSearching
-            )
-        }
-    }
 
     fun searchVolumes(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -60,6 +54,32 @@ class ShelfScribeViewModel(
             it.copy(
                 query = query
             )
+        }
+    }
+
+    fun isSearching(isSearching: Boolean) {
+        _uiState.update {
+            it.copy(
+                isSearching = isSearching
+            )
+        }
+    }
+
+    fun getVolume(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update {
+                it.copy(
+                    volumeRequestStatus = try {
+                        VolumeRequestStatus.Success(
+                            shelfScribeRepository.getVolumeById(id)
+                        )
+                    } catch (e: IOException) {
+                        VolumeRequestStatus.Error
+                    } catch (e: HttpException) {
+                        VolumeRequestStatus.Error
+                    }
+                )
+            }
         }
     }
 

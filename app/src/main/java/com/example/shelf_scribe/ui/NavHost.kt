@@ -9,16 +9,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.shelf_scribe.network.SearchRequestStatus
+import com.example.shelf_scribe.network.VolumeRequestStatus
 import com.example.shelf_scribe.ui.screens.HomeScreen
-import com.example.shelf_scribe.ui.screens.search.SearchResultsScreen
+import com.example.shelf_scribe.ui.screens.search.SearchDetailsScreen
+import com.example.shelf_scribe.ui.screens.search.SearchScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Search : Screen("search") {
         object Entry : Screen("entry")
-        object Results : Screen("results")
+        object Details : Screen("details")
     }
-    object Details : Screen("details")
 }
 
 @Composable
@@ -26,6 +27,8 @@ fun MainNavHost(
     navController: NavHostController,
     context: Context,
     searchRequestStatus: SearchRequestStatus,
+    volumeRequestStatus: VolumeRequestStatus,
+    onVolumeClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -37,32 +40,35 @@ fun MainNavHost(
             HomeScreen()
         }
         searchGraph(
-            navController = navController,
             context = context,
-            searchRequestStatus = searchRequestStatus
+            searchRequestStatus = searchRequestStatus,
+            volumeRequestStatus = volumeRequestStatus,
+            onVolumeClick = onVolumeClick
         )
     }
 }
 
 fun NavGraphBuilder.searchGraph(
-    navController: NavHostController,
     context: Context,
-    searchRequestStatus: SearchRequestStatus
+    searchRequestStatus: SearchRequestStatus,
+    volumeRequestStatus: VolumeRequestStatus,
+    onVolumeClick: (String) -> Unit,
 ) {
     navigation(
         startDestination = Screen.Search.Entry.route,
         route = Screen.Search.route
     ) {
         composable(Screen.Search.Entry.route) {
-            SearchResultsScreen(
+            SearchScreen(
                 searchRequestStatus = searchRequestStatus,
                 context = context,
+                onVolumeClick = onVolumeClick
             )
         }
-        composable(Screen.Search.Results.route) {
-            SearchResultsScreen(
-                searchRequestStatus = searchRequestStatus,
-                context = context,
+        composable(Screen.Search.Details.route) {
+            SearchDetailsScreen(
+                volumeRequestStatus = volumeRequestStatus,
+                context = context
             )
         }
     }
