@@ -13,9 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +33,7 @@ import com.example.shelf_scribe.ui.components.HomeScreenTopAppBar
 import com.example.shelf_scribe.ui.components.SearchTopBar
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ShelfScribeApp(
     modifier: Modifier = Modifier,
@@ -47,6 +50,7 @@ fun ShelfScribeApp(
     val uiState by viewModel.uiState.collectAsState()
 
     val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val navigationItemContentList = listOf(
         NavigationItemContent(
@@ -69,7 +73,10 @@ fun ShelfScribeApp(
                 Screen.Search.Entry.route -> SearchTopBar(
                     query = uiState.query,
                     onQueryChange = { viewModel.updateQuery(it) },
-                    onSearch = { viewModel.searchVolumes(uiState.query) },
+                    onSearch = {
+                        viewModel.searchVolumes(uiState.query)
+                        keyboardController?.hide()
+                    },
                     isSearching = uiState.isSearching,
                     onActiveChange = { /*TODO: ???*/ },
                     modifier = Modifier
