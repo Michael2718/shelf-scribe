@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.shelf_scribe.R
+import com.example.shelf_scribe.model.api.ExtendedVolume
 import com.example.shelf_scribe.network.VolumeRequestStatus
 
 @Composable
@@ -33,51 +34,64 @@ fun SearchDetailsScreen(
     when (volumeRequestStatus) {
         is VolumeRequestStatus.Loading -> Text(text = "Loading")
         is VolumeRequestStatus.Success -> {
-            val volume = volumeRequestStatus.volume
-            val title = volume.volumeInfo.title
-            val imageLinks = volume.volumeInfo.imageLinks
-            val imageLink = imageLinks?.small ?: (imageLinks?.thumbnail)
-
-            val scrollState = rememberScrollState()
-            Column(
+            SearchDetailsScreenContent(
+                volume = volumeRequestStatus.volume,
+                context = context,
                 modifier = modifier
-                    .padding(dimensionResource(R.dimen.padding_small))
-                    .verticalScroll(scrollState)
-            ) {
-                Card(
-                    modifier = Modifier.fillMaxSize(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                ) {
-                    if (imageLink == null) {
-                        Image(
-                            painter =  painterResource(R.drawable.ic_broken_image),
-                            contentDescription = stringResource(R.string.book_thumbnail_is_missing),
-                            modifier = Modifier.fillMaxSize(),
-                            alignment = Alignment.Center,
-                            contentScale = ContentScale.Fit
-                        )
-                    } else {
-                        AsyncImage(
-                            model = ImageRequest.Builder(context = context)
-                                .data(imageLink.replace("http", "https"))
-                                .crossfade(true)
-                                .build(),
-                            contentDescription = title,
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .fillMaxSize(),
-                            placeholder = painterResource(R.drawable.loading_img),
-                            error = painterResource(R.drawable.ic_broken_image),
-                            alignment = Alignment.Center,
-                            contentScale = ContentScale.FillWidth
-                        )
-                    }
-                }
-                Text(text = "${volume.volumeInfo.title} - ${volume.volumeInfo.authors}")
-                volume.volumeInfo.description?.let { Text(text = it) }
-            }
+            )
         }
         is VolumeRequestStatus.Error -> Text(text = "Error")
     }
+}
 
+@Composable
+fun SearchDetailsScreenContent(
+    volume: ExtendedVolume,
+    context: Context,
+    modifier: Modifier = Modifier
+) {
+    val title = volume.volumeInfo.title
+    val imageLinks = volume.volumeInfo.imageLinks
+    val imageLink = imageLinks?.small ?: (imageLinks?.thumbnail)
+
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier
+            .padding(dimensionResource(R.dimen.padding_small))
+            .verticalScroll(scrollState)
+    ) {
+        Card(
+            modifier = Modifier.fillMaxSize(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            if (imageLink == null) {
+                Image(
+                    painter =  painterResource(R.drawable.ic_broken_image),
+                    contentDescription = stringResource(R.string.book_thumbnail_is_missing),
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .fillMaxSize(),
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.FillWidth
+                )
+            } else {
+                AsyncImage(
+                    model = ImageRequest.Builder(context = context)
+                        .data(imageLink.replace("http", "https"))
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = title,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .fillMaxSize(),
+                    placeholder = painterResource(R.drawable.loading_img),
+                    error = painterResource(R.drawable.ic_broken_image),
+                    alignment = Alignment.Center,
+                    contentScale = ContentScale.FillWidth
+                )
+            }
+        }
+        Text(text = "${volume.volumeInfo.title} - ${volume.volumeInfo.authors}")
+        volume.volumeInfo.description?.let { Text(text = it) }
+    }
 }

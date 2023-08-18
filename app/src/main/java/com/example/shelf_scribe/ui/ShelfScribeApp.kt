@@ -5,17 +5,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
@@ -30,10 +34,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.shelf_scribe.R
 import com.example.shelf_scribe.ui.components.HomeScreenTopAppBar
-import com.example.shelf_scribe.ui.components.SearchTopBar
+import com.example.shelf_scribe.ui.components.SearchDetailsTopAppBar
+import com.example.shelf_scribe.ui.components.SearchTopAppBar
 
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ShelfScribeApp(
     modifier: Modifier = Modifier,
@@ -61,12 +66,17 @@ fun ShelfScribeApp(
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    val topAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+        state = TopAppBarState(0f, 0f, 0f)
+    )
+
     Scaffold(
-        modifier = modifier,
+        modifier = modifier
+            .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
         topBar = {
             when (currentRoute) {
                 Screen.Home.route -> HomeScreenTopAppBar()
-                Screen.Search.Entry.route -> SearchTopBar(
+                Screen.Search.Entry.route -> SearchTopAppBar(
                     query = uiState.query,
                     onQueryChange = { viewModel.updateQuery(it) },
                     onSearch = {
@@ -89,6 +99,11 @@ fun ShelfScribeApp(
                             bottom = dimensionResource(R.dimen.padding_medium)
                         )
                         .fillMaxWidth()
+                )
+
+                Screen.Search.Details.route -> SearchDetailsTopAppBar(
+                    scrollBehavior = topAppBarScrollBehavior,
+                    onBack = { navController.navigateUp() }
                 )
             }
         },

@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -42,7 +43,7 @@ fun HomeScreenTopAppBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchTopBar(
+fun SearchTopAppBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit,
@@ -109,4 +110,26 @@ fun SearchTopBar(
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchDetailsTopAppBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    TopAppBar(
+        title = {},
+        modifier = modifier,
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.back)
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior
+    )
 }
