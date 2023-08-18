@@ -12,6 +12,8 @@ data class ExtendedVolume(
 data class ExtendedVolumeInfo(
     val title: String,
     val authors: List<String>,
+    val publisher: String? = null,
+    val publishedDate: String? = null,
     val description: String? = null,
     val pageCount: Int,
     val imageLinks: ExtendedImageLinks? = null
