@@ -5,12 +5,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -67,6 +69,7 @@ fun SearchDetailsScreenContent(
     val author = volume.volumeInfo.authors[0] // Assuming, that book has one main author
     val publisher = volume.volumeInfo.publisher
     val publishedDate = volume.volumeInfo.publishedDate
+    val description = volume.volumeInfo.description
     val imageLinks = volume.volumeInfo.imageLinks
     val imageLink = imageLinks?.small ?: (imageLinks?.thumbnail)
 
@@ -95,6 +98,7 @@ fun SearchDetailsScreenContent(
                 )
             }
         )
+//        Divider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
         ListItem(
             headlineContent = { Text(text = author, fontWeight = FontWeight.SemiBold) },
             supportingContent = { Text(text = "Author") }
@@ -106,6 +110,27 @@ fun SearchDetailsScreenContent(
         ListItem(
             headlineContent = { publishedDate?.let { Text(it, fontWeight = FontWeight.SemiBold) } },
             supportingContent = { Text(text = "Published date") }
+        )
+        Divider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
+        ListItem(
+            headlineContent = {
+                Text(
+                    text = "About this book",
+//                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+        )
+        ListItem(
+            headlineContent = {
+                description?.let {
+//                    Text
+                    Text(
+                        text = it,
+//                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
         )
     }
 }
