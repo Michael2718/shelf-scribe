@@ -4,6 +4,7 @@ import com.example.shelf_scribe.model.api.ExtendedVolume
 import com.example.shelf_scribe.model.api.Volume
 
 sealed interface SearchRequestStatus {
+    object Start : SearchRequestStatus
     data class Success(
         val volumes: List<Volume>
     ) : SearchRequestStatus

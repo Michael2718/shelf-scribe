@@ -24,15 +24,18 @@ import coil.request.ImageRequest
 import com.example.shelf_scribe.R
 import com.example.shelf_scribe.model.api.ExtendedVolume
 import com.example.shelf_scribe.network.VolumeRequestStatus
+import com.example.shelf_scribe.ui.screens.ErrorScreen
+import com.example.shelf_scribe.ui.screens.LoadingScreen
 
 @Composable
 fun SearchDetailsScreen(
     volumeRequestStatus: VolumeRequestStatus,
     context: Context,
+    retryAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     when (volumeRequestStatus) {
-        is VolumeRequestStatus.Loading -> Text(text = "Loading")
+        is VolumeRequestStatus.Loading -> LoadingScreen(Modifier.fillMaxSize())
         is VolumeRequestStatus.Success -> {
             SearchDetailsScreenContent(
                 volume = volumeRequestStatus.volume,
@@ -40,7 +43,7 @@ fun SearchDetailsScreen(
                 modifier = modifier
             )
         }
-        is VolumeRequestStatus.Error -> Text(text = "Error")
+        is VolumeRequestStatus.Error -> ErrorScreen(retryAction, Modifier.fillMaxSize())
     }
 }
 

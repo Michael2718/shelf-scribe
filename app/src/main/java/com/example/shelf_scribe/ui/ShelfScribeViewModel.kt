@@ -25,8 +25,9 @@ class ShelfScribeViewModel(
         ShelfScribeUiState(
             query = "",
             isSearching = false,
-            searchRequestStatus = SearchRequestStatus.Loading,
-            volumeRequestStatus = VolumeRequestStatus.Loading
+            searchRequestStatus = SearchRequestStatus.Start,
+            volumeRequestStatus = VolumeRequestStatus.Loading,
+            currentVolumeId = ""
         )
     )
     val uiState: StateFlow<ShelfScribeUiState> = _uiState
@@ -80,6 +81,14 @@ class ShelfScribeViewModel(
                     }
                 )
             }
+        }
+    }
+
+    fun updateCurrentVolumeId(id: String) {
+        _uiState.update {
+            it.copy(
+                currentVolumeId = id
+            )
         }
     }
 

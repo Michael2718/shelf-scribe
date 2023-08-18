@@ -28,6 +28,8 @@ fun MainNavHost(
     context: Context,
     searchRequestStatus: SearchRequestStatus,
     volumeRequestStatus: VolumeRequestStatus,
+    searchRetryAction: () -> Unit,
+    getVolumeRetryAction: () -> Unit,
     onVolumeClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,6 +45,8 @@ fun MainNavHost(
             context = context,
             searchRequestStatus = searchRequestStatus,
             volumeRequestStatus = volumeRequestStatus,
+            searchRetryAction = searchRetryAction,
+            getVolumeRetryAction = getVolumeRetryAction,
             onVolumeClick = onVolumeClick
         )
     }
@@ -52,6 +56,8 @@ fun NavGraphBuilder.searchGraph(
     context: Context,
     searchRequestStatus: SearchRequestStatus,
     volumeRequestStatus: VolumeRequestStatus,
+    searchRetryAction: () -> Unit,
+    getVolumeRetryAction: () -> Unit,
     onVolumeClick: (String) -> Unit,
 ) {
     navigation(
@@ -62,13 +68,15 @@ fun NavGraphBuilder.searchGraph(
             SearchScreen(
                 searchRequestStatus = searchRequestStatus,
                 context = context,
+                retryAction = searchRetryAction,
                 onVolumeClick = onVolumeClick
             )
         }
         composable(Screen.Search.Details.route) {
             SearchDetailsScreen(
                 volumeRequestStatus = volumeRequestStatus,
-                context = context
+                context = context,
+                retryAction = getVolumeRetryAction
             )
         }
     }

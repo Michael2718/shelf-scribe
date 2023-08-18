@@ -6,6 +6,9 @@ import com.example.shelf_scribe.network.VolumeRequestStatus
 data class ShelfScribeUiState(
     val query: String,
     val isSearching: Boolean,
+
     val searchRequestStatus: SearchRequestStatus,
-    val volumeRequestStatus: VolumeRequestStatus
+    val volumeRequestStatus: VolumeRequestStatus,
+
+    val currentVolumeId: String
 )

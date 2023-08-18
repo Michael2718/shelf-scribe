@@ -29,16 +29,20 @@ import coil.request.ImageRequest
 import com.example.shelf_scribe.R
 import com.example.shelf_scribe.model.api.Volume
 import com.example.shelf_scribe.network.SearchRequestStatus
+import com.example.shelf_scribe.ui.screens.ErrorScreen
+import com.example.shelf_scribe.ui.screens.LoadingScreen
 
 @Composable
 fun SearchScreen(
     searchRequestStatus: SearchRequestStatus,
     context: Context,
+    retryAction: () -> Unit,
     onVolumeClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     when (searchRequestStatus) {
-        is SearchRequestStatus.Loading -> Text(text = "Loading")
+        is SearchRequestStatus.Start -> Text("Search books!")
+        is SearchRequestStatus.Loading -> LoadingScreen(Modifier.fillMaxSize())
         is SearchRequestStatus.Success -> {
             ThumbnailsGridScreen(
                 volumes = searchRequestStatus.volumes, // getThumbnailsFromVolumes(searchRequestStatus.volumes),
@@ -47,12 +51,12 @@ fun SearchScreen(
                 modifier = modifier
             )
         }
-        is SearchRequestStatus.Error -> Text(text = "Error")
+        is SearchRequestStatus.Error -> ErrorScreen(retryAction, Modifier.fillMaxSize())
     }
 }
 
 @Composable
-fun ThumbnailsGridScreen(
+private fun ThumbnailsGridScreen(
     volumes: List<Volume>,
     context: Context,
     onVolumeClick: (String) -> Unit,
@@ -79,7 +83,7 @@ fun ThumbnailsGridScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ThumbnailCard(
+private fun ThumbnailCard(
     volume: Volume,
     context: Context,
     onVolumeClick: (String) -> Unit,
