@@ -1,5 +1,6 @@
 package com.example.shelf_scribe.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -31,19 +32,23 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.shelf_scribe.R
 import com.example.shelf_scribe.ui.components.HomeScreenTopAppBar
 import com.example.shelf_scribe.ui.components.SearchDetailsTopAppBar
 import com.example.shelf_scribe.ui.components.SearchTopAppBar
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalAnimationApi::class
+)
 @Composable
 fun ShelfScribeApp(
     modifier: Modifier = Modifier,
     viewModel: ShelfScribeViewModel = viewModel(factory = ShelfScribeViewModel.Factory),
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberAnimatedNavController()
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination

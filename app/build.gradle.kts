@@ -63,6 +63,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.30.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -86,7 +87,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     // Html Text
-    implementation("de.charlex.compose:html-text:1.3.1")
+    implementation("de.charlex.compose:html-text:1.4.1")
 
     // Lottie
     implementation("com.airbnb.android:lottie-compose:6.1.0")
