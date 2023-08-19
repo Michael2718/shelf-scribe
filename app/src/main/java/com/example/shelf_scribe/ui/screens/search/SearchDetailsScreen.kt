@@ -70,10 +70,10 @@ fun SearchDetailsScreenContent(
     val author = volume.volumeInfo.authors[0] // Assuming, that book has one main author
     val publisher = volume.volumeInfo.publisher
     val publishedDate = volume.volumeInfo.publishedDate
-    val description = volume.volumeInfo.description ?: ""
-
+    val description = volume.volumeInfo.description
+    val pageCount = volume.volumeInfo.pageCount
     val imageLinks = volume.volumeInfo.imageLinks
-    val imageLink = imageLinks?.small ?: (imageLinks?.thumbnail)
+    val imageLink = imageLinks?.medium ?: (imageLinks?.small ?: imageLinks?.thumbnail)
 
     val scrollState = rememberScrollState()
     Column(
@@ -101,16 +101,20 @@ fun SearchDetailsScreenContent(
             }
         )
         ListItem(
-            headlineContent = { Text(text = author, fontWeight = FontWeight.SemiBold) },
-            supportingContent = { Text(text = "Author") }
+            headlineContent = { Text(author, fontWeight = FontWeight.SemiBold) },
+            supportingContent = { Text("Author") }
         )
         ListItem(
-            headlineContent = { publisher?.let { Text(it, fontWeight = FontWeight.SemiBold) } },
-            supportingContent = { Text(text = "Publisher") }
+            headlineContent = { Text(publisher, fontWeight = FontWeight.SemiBold) },
+            supportingContent = { Text("Publisher") }
         )
         ListItem(
-            headlineContent = { publishedDate?.let { Text(it, fontWeight = FontWeight.SemiBold) } },
-            supportingContent = { Text(text = "Published date") }
+            headlineContent = { Text(publishedDate, fontWeight = FontWeight.SemiBold) },
+            supportingContent = { Text("Published date") }
+        )
+        ListItem(
+            headlineContent = { Text(pageCount.toString(), fontWeight = FontWeight.SemiBold) },
+            supportingContent = { Text("Pages") }
         )
         Divider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
         ListItem(
