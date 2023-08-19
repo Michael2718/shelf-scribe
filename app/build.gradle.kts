@@ -87,4 +87,7 @@ dependencies {
 
     // Html Text
     implementation("de.charlex.compose:html-text:1.3.1")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie-compose:6.1.0")
 }
