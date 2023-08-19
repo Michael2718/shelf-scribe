@@ -5,6 +5,7 @@ import com.example.shelf_scribe.model.api.Volume
 import com.example.shelf_scribe.network.GoogleBooksApiService
 
 interface ShelfScribeRepository {
+    suspend fun getVolumesBySubject(subject: String): List<Volume>
     suspend fun searchVolumes(query: String): List<Volume>
 //    suspend fun getThumbnailsFromIdList(idList: List<String>): List<String>
     suspend fun getVolumeById(id: String): ExtendedVolume
@@ -14,8 +15,12 @@ class NetworkShelfScribeRepository(
     private val googleBooksApiService: GoogleBooksApiService
 ) : ShelfScribeRepository {
 
+    override suspend fun getVolumesBySubject(subject: String): List<Volume> {
+        return googleBooksApiService.searchVolumes("subject:$subject").items
+    }
+
     override suspend fun searchVolumes(query: String): List<Volume> {
-        return googleBooksApiService.searchVolumes(query).items
+        return googleBooksApiService.searchVolumes(query, maxResults = 40).items
     }
 
 //    override suspend fun getThumbnailsFromIdList(idList: List<String>): List<String> {

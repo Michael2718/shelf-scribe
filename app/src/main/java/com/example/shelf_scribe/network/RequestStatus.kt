@@ -3,6 +3,15 @@ package com.example.shelf_scribe.network
 import com.example.shelf_scribe.model.api.ExtendedVolume
 import com.example.shelf_scribe.model.api.Volume
 
+sealed interface SubjectsRequestStatus {
+    data class Success(
+        val subjects: Map<String, List<Volume>>
+    ) : SubjectsRequestStatus
+
+    object Error : SubjectsRequestStatus
+    object Loading : SubjectsRequestStatus
+}
+
 sealed interface SearchRequestStatus {
     object Start : SearchRequestStatus
     data class Success(

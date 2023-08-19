@@ -132,9 +132,11 @@ fun ShelfScribeApp(
         MainNavHost(
             navController = navController,
             context = context,
+            subjectsRequestStatus = uiState.subjectsRequestStatus,
             searchRequestStatus = uiState.searchRequestStatus,
             volumeRequestStatus = uiState.volumeRequestStatus,
             searchRetryAction = { viewModel.searchVolumes(uiState.query) },
+            getSubjectsRetryAction = { viewModel.getSubjects() },
             getVolumeRetryAction = { viewModel.getVolume(uiState.currentVolumeId) },
             onVolumeClick = { id ->
                 navController.navigate(Screen.Search.Details.route)

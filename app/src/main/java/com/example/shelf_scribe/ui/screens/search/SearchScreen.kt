@@ -1,8 +1,7 @@
 package com.example.shelf_scribe.ui.screens.search
 
 import android.content.Context
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
@@ -13,27 +12,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.shelf_scribe.R
 import com.example.shelf_scribe.model.api.Volume
 import com.example.shelf_scribe.network.SearchRequestStatus
 import com.example.shelf_scribe.ui.components.InfiniteAnimation
+import com.example.shelf_scribe.ui.components.ThumbnailCard
 import com.example.shelf_scribe.ui.screens.ErrorScreen
 import com.example.shelf_scribe.ui.screens.LoadingScreen
 import com.example.shelf_scribe.ui.theme.ShelfScribeTheme
@@ -48,7 +40,7 @@ fun SearchScreen(
 ) {
     when (searchRequestStatus) {
         is SearchRequestStatus.Start -> StartScreen(
-            modifier = modifier//.fillMaxSize()
+            modifier = modifier.fillMaxSize()//.fillMaxSize()
         )
         is SearchRequestStatus.Loading -> LoadingScreen(modifier.fillMaxSize())
         is SearchRequestStatus.Success -> {
@@ -70,7 +62,7 @@ private fun StartScreen(
 ) {
     Column(
         modifier = modifier,
-//        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         InfiniteAnimation(
@@ -107,46 +99,6 @@ private fun ThumbnailsGridScreen(
                     .padding(dimensionResource(R.dimen.padding_small))
                     .fillMaxWidth()
                     .aspectRatio(2 / 3f)
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ThumbnailCard(
-    volume: Volume,
-    context: Context,
-    onVolumeClick: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val imageLink = volume.volumeInfo.imageLinks?.thumbnail
-    Card(
-        onClick = { onVolumeClick(volume.id) },
-        modifier = modifier,
-        shape = RectangleShape,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
-    ) {
-        if (imageLink == null) {
-            Image(
-                painter = painterResource(R.drawable.ic_broken_image),
-                contentDescription = stringResource(R.string.book_thumbnail_is_missing),
-                modifier = Modifier.fillMaxSize(),
-                alignment = Alignment.Center,
-                contentScale = ContentScale.Fit
-            )
-        } else {
-            AsyncImage(
-                model = ImageRequest.Builder(context = context)
-                    .data(imageLink.replace("http", "https"))
-                    .crossfade(true)
-                    .build(),
-                contentDescription = stringResource(R.string.book),
-                modifier = Modifier.fillMaxSize(),
-                placeholder = painterResource(R.drawable.loading_img),
-                error = painterResource(R.drawable.ic_broken_image),
-                alignment = Alignment.Center,
-                contentScale = ContentScale.Crop
             )
         }
     }

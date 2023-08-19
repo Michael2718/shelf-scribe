@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.shelf_scribe.ShelfScribeApplication
 import com.example.shelf_scribe.data.ShelfScribeRepository
 import com.example.shelf_scribe.network.SearchRequestStatus
+import com.example.shelf_scribe.network.SubjectsRequestStatus
 import com.example.shelf_scribe.network.VolumeRequestStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,7 @@ class ShelfScribeViewModel(
 
     private val _uiState = MutableStateFlow(
         ShelfScribeUiState(
+            subjectsRequestStatus = SubjectsRequestStatus.Loading,
             query = "",
             isSearching = false,
             searchRequestStatus = SearchRequestStatus.Start,
@@ -31,6 +33,39 @@ class ShelfScribeViewModel(
         )
     )
     val uiState: StateFlow<ShelfScribeUiState> = _uiState
+
+    private val subjects = listOf(
+        "Architecture",
+        "Bibles",
+        "Computers",
+        "Cooking",
+        "Drama",
+        "Fiction"
+    )
+
+    init {
+        getSubjects()
+    }
+
+    fun getSubjects() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _uiState.update {
+                it.copy(
+                    subjectsRequestStatus = try {
+                        SubjectsRequestStatus.Success(
+                            subjects = subjects.associateWith { subject ->
+                                shelfScribeRepository.getVolumesBySubject(subject)
+                            }
+                        )
+                    } catch (e: IOException) {
+                        SubjectsRequestStatus.Error
+                    } catch (e: HttpException) {
+                        SubjectsRequestStatus.Error
+                    }
+                )
+            }
+        }
+    }
 
     fun searchVolumes(query: String) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -17,6 +17,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
 import com.example.shelf_scribe.network.SearchRequestStatus
+import com.example.shelf_scribe.network.SubjectsRequestStatus
 import com.example.shelf_scribe.network.VolumeRequestStatus
 import com.example.shelf_scribe.ui.screens.HomeScreen
 import com.example.shelf_scribe.ui.screens.search.SearchDetailsScreen
@@ -37,9 +38,11 @@ sealed class Screen(val route: String) {
 fun MainNavHost(
     navController: NavHostController,
     context: Context,
+    subjectsRequestStatus: SubjectsRequestStatus,
     searchRequestStatus: SearchRequestStatus,
     volumeRequestStatus: VolumeRequestStatus,
     searchRetryAction: () -> Unit,
+    getSubjectsRetryAction: () -> Unit,
     getVolumeRetryAction: () -> Unit,
     onVolumeClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -53,29 +56,33 @@ fun MainNavHost(
     ) {
         composable(
             route = Screen.Home.route,
-            enterTransition = {
+            popEnterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        600, easing = LinearEasing
                     )
                 ) + slideIntoContainer(
-                    animationSpec = tween(300, easing = EaseIn),
+                    animationSpec = tween(600, easing = EaseIn),
                     towards = AnimatedContentScope.SlideDirection.Start
                 )
             },
             exitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        600, easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
-                    animationSpec = tween(300, easing = EaseOut),
+                    animationSpec = tween(600, easing = EaseOut),
                     towards = AnimatedContentScope.SlideDirection.End
                 )
             }
-
         ) {
-            HomeScreen()
+            HomeScreen(
+                subjectsRequestStatus = subjectsRequestStatus,
+                context = context,
+                retryAction = getSubjectsRetryAction,
+                onVolumeClick = onVolumeClick
+            )
         }
         searchGraph(
             context = context,
@@ -106,23 +113,43 @@ fun NavGraphBuilder.searchGraph(
             enterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        600, easing = LinearEasing
                     )
                 ) + slideIntoContainer(
-                    animationSpec = tween(300, easing = EaseIn),
+                    animationSpec = tween(600, easing = EaseIn),
                     towards = AnimatedContentScope.SlideDirection.Start
+                )
+            },
+            popExitTransition = {
+                fadeOut(
+                    animationSpec = tween(
+                        600, easing = LinearEasing
+                    )
+                ) + slideOutOfContainer(
+                    animationSpec = tween(600, easing = EaseOut),
+                    towards = AnimatedContentScope.SlideDirection.End
                 )
             },
             exitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        600, easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
-                    animationSpec = tween(300, easing = EaseOut),
+                    animationSpec = tween(600, easing = EaseOut),
                     towards = AnimatedContentScope.SlideDirection.End
                 )
-            }
+            },
+            popEnterTransition = {
+                fadeIn(
+                    animationSpec = tween(
+                        600, easing = LinearEasing
+                    )
+                ) + slideIntoContainer(
+                    animationSpec = tween(600, easing = EaseIn),
+                    towards = AnimatedContentScope.SlideDirection.Start
+                )
+            },
         ) {
             SearchScreen(
                 searchRequestStatus = searchRequestStatus,
@@ -136,23 +163,24 @@ fun NavGraphBuilder.searchGraph(
             enterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        600, easing = LinearEasing
                     )
                 ) + slideIntoContainer(
-                    animationSpec = tween(300, easing = EaseIn),
+                    animationSpec = tween(600, easing = EaseIn),
                     towards = AnimatedContentScope.SlideDirection.Start
                 )
             },
-            exitTransition = {
+            popExitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        600, easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
-                    animationSpec = tween(300, easing = EaseOut),
+                    animationSpec = tween(600, easing = EaseOut),
                     towards = AnimatedContentScope.SlideDirection.End
                 )
-            }
+            },
+
         ) {
             SearchDetailsScreen(
                 volumeRequestStatus = volumeRequestStatus,
