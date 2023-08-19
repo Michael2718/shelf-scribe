@@ -84,4 +84,7 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    // Html Text
+    implementation("de.charlex.compose:html-text:1.3.1")
 }

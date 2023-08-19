@@ -37,6 +37,7 @@ import com.example.shelf_scribe.network.VolumeRequestStatus
 import com.example.shelf_scribe.ui.screens.ErrorScreen
 import com.example.shelf_scribe.ui.screens.LoadingScreen
 import com.example.shelf_scribe.ui.theme.ShelfScribeTheme
+import de.charlex.compose.HtmlText
 
 @Composable
 fun SearchDetailsScreen(
@@ -69,7 +70,8 @@ fun SearchDetailsScreenContent(
     val author = volume.volumeInfo.authors[0] // Assuming, that book has one main author
     val publisher = volume.volumeInfo.publisher
     val publishedDate = volume.volumeInfo.publishedDate
-    val description = volume.volumeInfo.description
+    val description = volume.volumeInfo.description ?: ""
+
     val imageLinks = volume.volumeInfo.imageLinks
     val imageLink = imageLinks?.small ?: (imageLinks?.thumbnail)
 
@@ -98,7 +100,6 @@ fun SearchDetailsScreenContent(
                 )
             }
         )
-//        Divider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
         ListItem(
             headlineContent = { Text(text = author, fontWeight = FontWeight.SemiBold) },
             supportingContent = { Text(text = "Author") }
@@ -116,20 +117,17 @@ fun SearchDetailsScreenContent(
             headlineContent = {
                 Text(
                     text = "About this book",
-//                    fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleLarge
                 )
             }
         )
         ListItem(
             headlineContent = {
-                description?.let {
-//                    Text
-                    Text(
-                        text = it,
-//                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
+                HtmlText(
+                    text = description,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         )
     }
