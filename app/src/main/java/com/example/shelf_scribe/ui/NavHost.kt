@@ -59,20 +59,20 @@ fun MainNavHost(
             popEnterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideIntoContainer(
-                    animationSpec = tween(600, easing = EaseIn),
+                    animationSpec = tween(300, easing = EaseIn),
                     towards = AnimatedContentScope.SlideDirection.Start
                 )
             },
             exitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
-                    animationSpec = tween(600, easing = EaseOut),
+                    animationSpec = tween(300, easing = EaseOut),
                     towards = AnimatedContentScope.SlideDirection.End
                 )
             }
@@ -113,40 +113,40 @@ fun NavGraphBuilder.searchGraph(
             enterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideIntoContainer(
-                    animationSpec = tween(600, easing = EaseIn),
+                    animationSpec = tween(300, easing = EaseIn),
                     towards = AnimatedContentScope.SlideDirection.Start
                 )
             },
             popExitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
-                    animationSpec = tween(600, easing = EaseOut),
+                    animationSpec = tween(300, easing = EaseOut),
                     towards = AnimatedContentScope.SlideDirection.End
                 )
             },
             exitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
-                    animationSpec = tween(600, easing = EaseOut),
+                    animationSpec = tween(300, easing = EaseOut),
                     towards = AnimatedContentScope.SlideDirection.End
                 )
             },
             popEnterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideIntoContainer(
-                    animationSpec = tween(600, easing = EaseIn),
+                    animationSpec = tween(300, easing = EaseIn),
                     towards = AnimatedContentScope.SlideDirection.Start
                 )
             },
@@ -163,20 +163,20 @@ fun NavGraphBuilder.searchGraph(
             enterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideIntoContainer(
-                    animationSpec = tween(600, easing = EaseIn),
+                    animationSpec = tween(300, easing = EaseIn),
                     towards = AnimatedContentScope.SlideDirection.Start
                 )
             },
             popExitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        600, easing = LinearEasing
+                        300, easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
-                    animationSpec = tween(600, easing = EaseOut),
+                    animationSpec = tween(300, easing = EaseOut),
                     towards = AnimatedContentScope.SlideDirection.End
                 )
             },

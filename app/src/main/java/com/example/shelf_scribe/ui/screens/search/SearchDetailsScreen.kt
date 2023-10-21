@@ -176,28 +176,28 @@ fun ImageCard(
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun SearchDetailsScreenContentPreview() {
-    val volume = ExtendedVolume(
-        id = "3Cy7DwAAQBAJ",
-        volumeInfo = ExtendedVolumeInfo(
-            title = "Pride and Prejudice",
-            authors = listOf("Jane Austen"),
-            publisher = "Oxford University Press",
-            publishedDate = "2019-11-05",
-            description = "He began to feel the danger of paying Elizabeth too much attention.\"<br> <br> Pride and Prejudice , one of the most famous love stories of all time, has also proven itself as a treasured mainstay of the English literary canon. With the arrival of eligible young men in their neighbourhood, the lives of Mr. and Mrs. Bennet and their five daughters are turned inside out and upside down. Pride encounters prejudice, upward-mobility confronts social disdain, and quick-wittedness challenges sagacity. Misconceptions and hasty judgements bring heartache and scandal, but eventually lead to true understanding, self-knowledge, and love.<br> <br> It's almost impossible to open Pride and Prejudice without feeling the pressure of so many readers having known and loved this novel already. Will you fail the test - or will you love it too? As a story that celebrates more unflinchingly than any of Austen's other novels the happy meeting-of-true-minds, and one that has attracted the most fans over the centuries, Pride and Prejudice sets up an echo chamber of good feelings in which romantic love and the love of reading amplify each other.<br>",
-            pageCount = 3,
-//            imageLinks = ExtendedImageLinks(
-//                thumbnail = "http://books.google.com/books/publisher/content?id=3Cy7DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&imgtk=AFLRE72CCTUy7L9lE_1MYVFoQy3pFs_LvjJcZAan4mc0EIu-osHwEYXT5AGyGzb3I7K2t1_Jro7fbcR2acE0WHiLmd0iqcmqOe4KyNFMhbTmp6BXQfLbcLaqYZKIs9Y75mHtl4fENN_D&source=gbs_api"
-//            )
-        )
-    )
-    ShelfScribeTheme {
-        SearchDetailsScreenContent(
-            volume = volume,
-            context = LocalContext.current,
-            modifier = Modifier.padding(4.dp)
-        )
-    }
-}
+//@Preview(showSystemUi = true, showBackground = true)
+//@Composable
+//fun SearchDetailsScreenContentPreview() {
+//    val volume = ExtendedVolume(
+//        id = "3Cy7DwAAQBAJ",
+//        volumeInfo = ExtendedVolumeInfo(
+//            title = "Pride and Prejudice",
+//            authors = listOf("Jane Austen"),
+//            publisher = "Oxford University Press",
+//            publishedDate = "2019-11-05",
+//            description = "He began to feel the danger of paying Elizabeth too much attention.\"<br> <br> Pride and Prejudice , one of the most famous love stories of all time, has also proven itself as a treasured mainstay of the English literary canon. With the arrival of eligible young men in their neighbourhood, the lives of Mr. and Mrs. Bennet and their five daughters are turned inside out and upside down. Pride encounters prejudice, upward-mobility confronts social disdain, and quick-wittedness challenges sagacity. Misconceptions and hasty judgements bring heartache and scandal, but eventually lead to true understanding, self-knowledge, and love.<br> <br> It's almost impossible to open Pride and Prejudice without feeling the pressure of so many readers having known and loved this novel already. Will you fail the test - or will you love it too? As a story that celebrates more unflinchingly than any of Austen's other novels the happy meeting-of-true-minds, and one that has attracted the most fans over the centuries, Pride and Prejudice sets up an echo chamber of good feelings in which romantic love and the love of reading amplify each other.<br>",
+//            pageCount = 3,
+////            imageLinks = ExtendedImageLinks(
+////                thumbnail = "http://books.google.com/books/publisher/content?id=3Cy7DwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&imgtk=AFLRE72CCTUy7L9lE_1MYVFoQy3pFs_LvjJcZAan4mc0EIu-osHwEYXT5AGyGzb3I7K2t1_Jro7fbcR2acE0WHiLmd0iqcmqOe4KyNFMhbTmp6BXQfLbcLaqYZKIs9Y75mHtl4fENN_D&source=gbs_api"
+////            )
+//        )
+//    )
+//    ShelfScribeTheme {
+//        SearchDetailsScreenContent(
+//            volume = volume,
+//            context = LocalContext.current,
+//            modifier = Modifier.padding(4.dp)
+//        )
+//    }
+//}

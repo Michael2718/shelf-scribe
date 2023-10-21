@@ -117,6 +117,7 @@ fun SearchTopAppBar(
 fun SearchDetailsTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     onBack: () -> Unit,
+    onDownload: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
@@ -130,6 +131,11 @@ fun SearchDetailsTopAppBar(
                 )
             }
         },
+//        actions = {
+//            IconButton(onClick = onDownload) {
+//                Icon(painterResource(R.drawable.baseline_download_24), contentDescription = null)
+//            }
+//        },
         scrollBehavior = scrollBehavior
     )
 }

@@ -29,7 +29,8 @@ class ShelfScribeViewModel(
             isSearching = false,
             searchRequestStatus = SearchRequestStatus.Start,
             volumeRequestStatus = VolumeRequestStatus.Loading,
-            currentVolumeId = ""
+            currentVolumeId = "",
+            currentPdfDownloadLink = ""
         )
     )
     val uiState: StateFlow<ShelfScribeUiState> = _uiState

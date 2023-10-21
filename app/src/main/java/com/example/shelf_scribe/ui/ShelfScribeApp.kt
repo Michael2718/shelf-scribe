@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +34,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.shelf_scribe.R
+import com.example.shelf_scribe.network.VolumeRequestStatus
 import com.example.shelf_scribe.ui.components.HomeScreenTopAppBar
 import com.example.shelf_scribe.ui.components.SearchDetailsTopAppBar
 import com.example.shelf_scribe.ui.components.SearchTopAppBar
@@ -75,6 +77,8 @@ fun ShelfScribeApp(
         state = TopAppBarState(0f, 0f, 0f)
     )
 
+    val uriHandler = LocalUriHandler.current
+
     Scaffold(
         modifier = modifier
             .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
@@ -83,7 +87,9 @@ fun ShelfScribeApp(
                 Screen.Home.route -> HomeScreenTopAppBar()
                 Screen.Search.Entry.route -> SearchTopAppBar(
                     query = uiState.query,
-                    onQueryChange = { viewModel.updateQuery(it) },
+                    onQueryChange = {
+                        viewModel.updateQuery(it)
+                    },
                     onSearch = {
                         viewModel.updateQuery(it)
                         viewModel.searchVolumes(it)
@@ -91,7 +97,9 @@ fun ShelfScribeApp(
                         keyboardController?.hide()
                     },
                     isSearching = uiState.isSearching,
-                    onActiveChange = { viewModel.isSearching(it) },
+                    onActiveChange = {
+                        viewModel.isSearching(it)
+                    },
                     onBack = {
                         viewModel.isSearching(false)
                         keyboardController?.hide()
@@ -108,7 +116,8 @@ fun ShelfScribeApp(
 
                 Screen.Search.Details.route -> SearchDetailsTopAppBar(
                     scrollBehavior = topAppBarScrollBehavior,
-                    onBack = { navController.navigateUp() }
+                    onBack = { navController.navigateUp() },
+                    onDownload = {}
                 )
             }
         },

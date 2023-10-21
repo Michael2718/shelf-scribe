@@ -12,5 +12,6 @@ data class ShelfScribeUiState(
     val searchRequestStatus: SearchRequestStatus,
 
     val volumeRequestStatus: VolumeRequestStatus,
-    val currentVolumeId: String
+    val currentVolumeId: String,
+    val currentPdfDownloadLink: String
 )
